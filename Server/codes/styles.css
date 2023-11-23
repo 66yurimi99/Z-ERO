@@ -1,0 +1,48 @@
+body {
+    background-color: #f0f5f9;
+    font-family: Arial, sans-serif;
+}
+
+.tab-menu {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    background-color: #3498db;
+}
+
+.tab-menu li {
+    flex: 1;
+}
+
+.tab-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.tab-menu a:hover {
+    background-color: #2980b9;
+}
+
+.tab-menu a.active {
+    background-color: #2980b9;
+}
+
+.tab-content {
+    display: none;
+}
+
+#tab1 {
+    display: block;
+}
+
+.spec {
+    text-align: center;
+}
+
+.con {
+    text-align: left;
+}
