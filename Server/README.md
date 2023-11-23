@@ -1,7 +1,29 @@
 # Fleet Management
 Fleet management를 위한 서버 환경을 구축합니다.
 
-## How to set up
+## Results
+### 1. 데이터베이스 접근을 위한 API
+다음 요청들을 통해 DB 데이터를 수정할 수 있습니다. (`HTTP/GET`)
+- 차량 등록 (by UI Application)
+    ```python
+    54.175.8.12/db.php?number=[차량번호]
+    ```
+- 시동 ON/OFF (by UI Application)
+    ```python
+    54.175.8.12/db.php?number=[차량번호]&car=[0 | 1]
+    ```
+- 운전자 상태 변경 (by DMS Service)
+    ```python
+    54.175.8.12/db.php?number=[차량번호]&driver=[0 | 1 | 2]
+    ```
+
+### 2. 웹 페이지 결과 화면 ([link](http://54.175.8.12/))
+![./data/output_webpage.png](./data/output_webpage.png)
+
+---
+<br>
+
+## Settings
 ### 1. Server Hosting (using AWS)
 서버 호스팅 후 고정 IP를 할당하고, 보안을 위해 서비스별 방화벽 접근 권한을 설정합니다.
 - IP Address : 54.175.8.12
@@ -14,11 +36,26 @@ Fleet management를 위한 서버 환경을 구축합니다.
     |MariaDB Server|웹 서버를 통해서만 접근|TCP|3306|웹 서버 IP|
 
 ---
+### 2. Installation
+- Apache2 설치 및 확인
+    ```shell
+    sudo apt install apache2 -y
+    systemctl status apache2
+    ```
+- MariaDB 설치 및 확인
+    ```shell
+    sudo apt install mariadb-server mariadb-client -y
+    systemctl status mariadb.service 
+    ```
+- PHP 설치
+    ```shell
+    $ sudo apt install php php-gd php-mysql -y
+    ```
 
-### 2. Database (MariaDB)
+### 3. Database (MariaDB)
 요구사항 및 데이터베이스 테이블 구성은 다음과 같습니다.  
 #### ERD
-![./ERD.png](./ERD.png)
+![./data/ERD.png](./data/ERD.png)
 
 #### 요구사항
 1) Information : 엣지 디바이스의 현재 상태 정보
@@ -84,3 +121,17 @@ DELIMITER ;
 
 ```
 
+---
+
+### 4. DB Access API
+- [config.png](./codes/config.php) : DB 접속 관련 설정 파일 (접속할 계정 정보 등)
+- [db.php](./codes/db.php) : DB 접근을 위한 API 구현
+
+---
+
+### 5. Web Page
+- [index.html](./codes/index.html) : 메인 페이지
+- [logs.php](./codes/logs.php) : DB Logs 테이블 정보를 불러와 실시간으로 출력하는 페이지
+- [styles.css](./codes/styles.css) : 디자인 관련 설정 파일
+
+---
