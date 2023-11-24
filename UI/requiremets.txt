@@ -1,5 +1,3 @@
-sudo apt install qtcreator
-
 pip install pyside2
 pip install opencv-python-headless
 pip install requests
