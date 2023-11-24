@@ -15,7 +15,7 @@ class FirstWindow(QMainWindow):
 
     def initUI(self):
         #apply Project name image to main UI
-        title_load = QPixmap('../data/images/Z_ERO.png')
+        title_load = QPixmap('./images/Z_ERO.png')
         title_img = QLabel(self)
         title_img.setPixmap(title_load)
         title_img.setGeometry(180, 100, title_load.width(), title_load.height())
@@ -31,7 +31,7 @@ class FirstWindow(QMainWindow):
         #apply Next button image to main UI
         next_btn = QPushButton(self)
         next_btn.setGeometry(550, 550, 100, 100)
-        next_btn.setStyleSheet("border-image:url(../data/images/next.png)")
+        next_btn.setStyleSheet("border-image:url(./images/next.png)")
         next_btn.clicked.connect(self.showSecondWindow)
 
         #show main UI
@@ -91,7 +91,7 @@ class SecondWindow(QDialog):
         inform_Processing.setStyleSheet("color: blue;" "border-style: solid;")
 
         inform_Driver.move(150, 40)
-        inform_Car.move(580, 40)
+        inform_Car.move(560, 40)
         inform_Processing.move(930, 40)
 
         self.background_label = QLabel(self)
@@ -101,34 +101,49 @@ class SecondWindow(QDialog):
         # set Driver video to main UI
         self.Driver_label = QLabel(self)
         self.Driver_label.setStyleSheet("background : black;")
-        self.Driver_label.resize(300, 400)
-        self.Driver_label.move(50, 150)
+        self.Driver_label.resize(300, 450)
+        self.Driver_label.move(50, 100)
 
         # set Car video to main UI
         self.Car_label = QLabel(self)
         self.Car_label.setStyleSheet("background : black;")
-        self.Car_label.resize(300, 400)
-        self.Car_label.move(450, 150)
+        self.Car_label.resize(300, 450)
+        self.Car_label.move(450, 100)
 
         # set Processing video to main UI
         self.Processing_label = QLabel(self)
         self.Processing_label.setStyleSheet("background : black;")
-        self.Processing_label.resize(300, 400)
-        self.Processing_label.move(850, 150)
+        self.Processing_label.resize(300, 450)
+        self.Processing_label.move(850, 100)
 
         # apply start button image to main UI
+        start_image = QPixmap("./images/start.png")
+        start_processed_image = start_image.scaled(130, 130, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+
         self.start_btn = QPushButton(self)
-        self.start_btn.setGeometry(400, 600, 100, 70)
-        self.start_btn.setStyleSheet("border-image:url(../data/images/start.png)")
+        self.start_btn.setIcon(QIcon(start_processed_image))
+        self.start_btn.setIconSize(start_processed_image.size())
+        self.start_btn.move(30,560)
         self.start_btn.clicked.connect(self.start_threads)
 
         # apply stop button image to main UI
+
+        stop_image = QPixmap("./images/stop.png")
+        stop_processed_image = stop_image.scaled(130, 130, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+
         self.stop_btn = QPushButton(self)
-        self.stop_btn.setGeometry(600, 600, 100, 70)
-        self.stop_btn.setStyleSheet("border-image:url(../data/images/pause.png)")
+        self.stop_btn.setIcon(QIcon(stop_processed_image))
+        self.stop_btn.setIconSize(stop_processed_image.size())
+        self.stop_btn.move(210,560)
         self.stop_btn.clicked.connect(self.stop_threads)
 
-        # apply logo image to main UI
+        # apply link button to main UI
+        self.link_btn = QPushButton(self)
+        self.link_btn.setGeometry(700, 600, 400, 50)
+        self.link_btn.setStyleSheet("border-image:url(./images/server.png)")
+        self.link_btn.clicked.connect(self.open_url)
+
+        #main UI
         self.setGeometry(400, 200, 1200, 700)
         self.setStyleSheet("background : white;")
 
@@ -136,22 +151,25 @@ class SecondWindow(QDialog):
         self.mutex = QMutex()
 
     def start_threads(self):
+
+        QMessageBox.about(self,'차량 상태',f'★ENGINE START ★')
+
         self.background_label.setStyleSheet("background : white;")
         # show Driver video to main UI
-        self.thread_Driver = VideoThread('../data/videos/Driver.mp4', self.mutex)
+        self.thread_Driver = VideoThread('./videos/Driver.mp4', self.mutex)
         self.thread_Driver.change_pixmap_signal.connect(self.update_driver_image)
         self.thread_Driver.start()
 
         # show Car video to main UI
         #self.thread_Car = VideoThread('http://192.168.100.146:5000/video_feed', self.mutex)
         self.Car_label.setStyleSheet("background : white;")
-        self.thread_Car = VideoThread('../data/videos/Car.mp4', self.mutex)
+        self.thread_Car = VideoThread('./videos/Car.mp4', self.mutex)
         self.thread_Car.change_pixmap_signal.connect(self.update_car_image)
         self.thread_Car.start()
 
         # show Processing video to main UI
         self.Processing_label.setStyleSheet("background : white;")
-        self.thread_Processing = VideoThread('../data/videos/Server.mp4', self.mutex)
+        self.thread_Processing = VideoThread('./videos/Server.mp4', self.mutex)
         self.thread_Processing.change_pixmap_signal.connect(self.update_processing_image)
         self.thread_Processing.start()
 
@@ -166,6 +184,8 @@ class SecondWindow(QDialog):
         # Stop Processing video thread
         if hasattr(self, 'thread_Processing') and self.thread_Processing.isRunning():
             self.thread_Processing.stop()
+
+        QMessageBox.about(self,'차량 상태',f'★ENGINE STOP ★')
 
     def update_driver_image(self, cv_img):
         qt_img = self.convert_cv_qt(cv_img)
@@ -185,10 +205,13 @@ class SecondWindow(QDialog):
         height, width, channel = rgb_image.shape
         bytes_per_line = channel * width
         convert_to_Qt_format = QImage(rgb_image.data, width, height, bytes_per_line, QImage.Format_RGB888)
-        resized_img = convert_to_Qt_format.scaled(300, 400)
+        resized_img = convert_to_Qt_format.scaled(300, 450)
 
         return QPixmap.fromImage(resized_img)
 
+    def open_url(self):
+           url = QUrl('http://54.175.8.12')
+           QDesktopServices.openUrl(url)
 """
 -----------------------------------------------------------------------------------------------------------------------------
 """
