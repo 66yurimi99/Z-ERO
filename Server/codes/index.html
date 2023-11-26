@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh">
+    <title>Z:ERO</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <ul class="tab-menu">
+        <li><a href="#tab1">🚨 Z:ERO Fleet Management System 🚨</a></li>
+    </ul>
+
+    <div id="tab1" class="tab-content" align="center">
+        <h2>실시간 로그 데이터</h2>
+        <ul align="left">
+            <li>Level 0 : 자율주행 OFF / 정상적인 운전이 가능한 상태</li>
+            <li>Level 1 : 자율주행 ON / 졸음 상태</li>
+            <li>Level 2 : 자율주행 ON / 수면 상태</li>
+        </ul>
+        <!-- 운전자 상태 변경 로그 -->
+        <iframe src="logs.php" frameborder="0" style="width:100%; overflow:auto; min-height:400px;"></iframe>
+    </div>
+</body>
+</html>
