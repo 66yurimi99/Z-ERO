@@ -3,7 +3,7 @@ name: "✅ Test Template"
 about: 성능 비교 및 테스트 작업 시 사용하는 템플릿입니다.
 title: 'Test: [파트] OOO 테스트'
 labels: "✅ test"
-assignees: ''
+assignees: akaError404, 66yurimi99, daron135, jis0202, YuNayeong, ParkYoungMoon
 
 ---
 
