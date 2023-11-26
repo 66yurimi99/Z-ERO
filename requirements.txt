@@ -1,0 +1,5 @@
+signals==0.0.2
+RPi.GPIO==0.7.0
+requests==2.25.1
+thread==0.1.2
+responses==0.12.1
