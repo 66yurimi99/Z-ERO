@@ -13,7 +13,7 @@ if ($number !== null)
 {
         if ($speed !== null)
         {
-                $stmt = $conn->prepare("UPDATE Controll SET speed=? WHERE number=?");
+                $stmt = $conn->prepare("UPDATE Control SET speed=? WHERE number=?");
                 $stmt->bind_param("is", $speed, $number);
 
                 if ($stmt->execute())
@@ -23,7 +23,7 @@ if ($number !== null)
         }
         elseif ($direction !== null)
         {
-                $stmt = $conn->prepare("UPDATE Controll SET direction=? WHERE number=?");
+                $stmt = $conn->prepare("UPDATE Control SET direction=? WHERE number=?");
                 $stmt->bind_param("ss", $direction, $number);
 
                 if ($stmt->execute())

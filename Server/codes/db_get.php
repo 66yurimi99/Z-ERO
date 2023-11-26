@@ -5,7 +5,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 // 파라미터 확인 : 조회할 데이터 받아오기
 $number = isset($_GET['number']) ? $_GET['number'] : "123가4567";
-$stmt = $conn->prepare("SELECT Information.number, car, driver, speed, direction FROM Information JOIN Controll ON Information.number=Controll.number WHERE Information.number=?");
+$stmt = $conn->prepare("SELECT Information.number, car, driver, speed, direction FROM Information JOIN Control ON Information.number=Control.number WHERE Information.number=?");
 $stmt->bind_param("s", $number);
 
 // 데이터베이스 쿼리
