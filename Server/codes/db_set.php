@@ -3,8 +3,8 @@
 include('config.php'); // 데이터베이스 설정 파일
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// 정보를 업데이트할 데이터 - HTTP 요청에서 파라미터를 받아옴
-$number = isset($_GET['number']) ? $_GET['number'] : null;
+// 파라미터 확인 : 업데이트할 데이터 받아오기
+$number = isset($_GET['number']) ? $_GET['number'] : "123가4567";
 $car = isset($_GET['car']) ? intval($_GET['car']) : null;
 $driver = isset($_GET['driver']) ? intval($_GET['driver']) : null;
 
