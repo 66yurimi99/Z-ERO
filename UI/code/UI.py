@@ -49,19 +49,12 @@ class FirstWindow(QMainWindow):
         self.show()
 
     def sendCarNumber(self):
-
-        #send Car Number to server
         CarNumber=self.input_CarNumber.text()
         QMessageBox.about(self,'차량 등록',f'★ [{CarNumber}] 등록 완료 ★')
 
-        #Todo
-        #DMS한테 차량번호 넘겨주기
-
         #send Car Number to server
-        #CarNumber=self.input_CarNumber.text()
-        #url=f'http://54.175.8.12/db.php?number={CarNumber}'
-        #response = requests.get(url)
-        #QMessageBox.about(self,'차량 등록',f'★ [{CarNumber}] 등록 완료 ★')
+        url=f'http://54.175.8.12/db_set.php?number={CarNumber}'
+        response = requests.get(url)
 
     def clearText(self, event):
             self.input_CarNumber.clear()
@@ -96,40 +89,40 @@ class SecondWindow(QDialog):
     def initUI(self):
         # Set font and size for labels
         self.inform_Driver = QLabel('Driver',self)
-        self.inform_Car = QLabel('Car',self)
-        self.inform_Processing = QLabel('Processing',self)
+        self.inform_Car = QLabel('Car (Origin)',self)
+        self.inform_Processing = QLabel('Car (Inferencing)',self)
 
-        self.inform_Driver.move(150, 40)
-        self.inform_Car.move(560, 40)
-        self.inform_Processing.move(930, 40)
+        self.inform_Driver.move(250, 40)
+        self.inform_Car.move(860, 40)
+        self.inform_Processing.move(1430, 40)
 
         self.background_label = QLabel(self)
-        self.background_label.setGeometry(0,100,1200,450)
+        self.background_label.setGeometry(0,100,1850,450)
         self.background_label.setStyleSheet("background : black;")
 
         # set Driver video to main UI
         self.Driver_label = QLabel(self)
         self.Driver_label.setStyleSheet("background : black;")
-        self.Driver_label.resize(300, 450)
+        self.Driver_label.resize(550, 450)
         self.Driver_label.move(50, 100)
 
         # set Car video to main UI
         self.Car_label = QLabel(self)
         self.Car_label.setStyleSheet("background : black;")
-        self.Car_label.resize(300, 450)
-        self.Car_label.move(450, 100)
+        self.Car_label.resize(550, 450)
+        self.Car_label.move(650, 100)
 
         # set Processing video to main UI
         self.Processing_label = QLabel(self)
         self.Processing_label.setStyleSheet("background : black;")
-        self.Processing_label.resize(300, 450)
-        self.Processing_label.move(850, 100)
+        self.Processing_label.resize(550, 450)
+        self.Processing_label.move(1250, 100)
 
         # show CarNumber to main UI
         self.textCar_label = QLabel('차량 번호',self)
         self.myCarNumber_label=QLabel(f'{self.myCarNumber}',self)
-        self.textCar_label.move(130, 580)
-        self.myCarNumber_label.move(125,630)
+        self.textCar_label.move(250, 580)
+        self.myCarNumber_label.move(240,630)
 
         # Set font for labels
         font = QFont()
@@ -142,7 +135,7 @@ class SecondWindow(QDialog):
 
         # Set styles for labels
         self.inform_Driver.setStyleSheet("color: red;" "border-style: solid;")
-        self.inform_Car.setStyleSheet("color: green;" "border-style: solid;")
+        self.inform_Car.setStyleSheet("color: blue;" "border-style: solid;")
         self.inform_Processing.setStyleSheet("color: blue;" "border-style: solid;")
         self.textCar_label.setStyleSheet("border-style: solid;")
         self.myCarNumber_label.setStyleSheet("border-style: solid;")
@@ -154,14 +147,14 @@ class SecondWindow(QDialog):
         self.start_btn = QPushButton(self)
         self.start_btn.setIcon(QIcon(self.start_processed_image))
         self.start_btn.setIconSize(self.start_processed_image.size())
-        self.start_btn.move(400, 560)
+        self.start_btn.move(650, 560)
         self.start_btn.clicked.connect(self.start_threads)
 
         #gif
         self.start_gif = QMovie("./images/start.gif")
         self.start_gif.setScaledSize(QSize(140, 140))
         self.start_gif_label = QLabel(self)
-        self.start_gif_label.setGeometry(400, 560, 140, 140)
+        self.start_gif_label.setGeometry(650, 560, 140, 140)
         self.start_gif_label.setMovie(self.start_gif)
         self.start_gif_label.setScaledContents(True)
         self.start_gif_label.hide()
@@ -173,23 +166,28 @@ class SecondWindow(QDialog):
         self.stop_btn = QPushButton(self)
         self.stop_btn.setIcon(QIcon(self.stop_processed_image))
         self.stop_btn.setIconSize(self.stop_processed_image.size())
-        self.stop_btn.move(650,560)
+        self.stop_btn.move(1060,560)
         self.stop_btn.clicked.connect(self.stop_threads)
 
         # apply link button to main UI
         self.link_btn = QPushButton(self)
-        self.link_btn.setGeometry(830, 600, 350, 50)
+        self.link_btn.setGeometry(1375, 600, 350, 50)
         self.link_btn.setStyleSheet("border-image:url(./images/server.png)")
         self.link_btn.clicked.connect(self.open_url)
 
         #main UI
-        self.setGeometry(400, 200, 1200, 700)
+        self.setGeometry(100, 200, 1850, 700)
         self.setStyleSheet("background : white;")
 
         # Thread synchronization
         self.mutex = QMutex()
 
+
     def start_threads(self):
+
+        url=f'http://54.175.8.12/db_set.php?car={1}'
+        response = requests.get(url)
+
         self.start_btn.hide()
         self.start_gif_label.show()
         self.start_gif.start()
@@ -198,24 +196,29 @@ class SecondWindow(QDialog):
         self.background_label.setStyleSheet("background : white;")
 
         # show Driver video to main UI
+        #self.thread_Driver = VideoThread('http://{Driver_Path}/video_feed', self.mutex)
         self.thread_Driver = VideoThread('./videos/Driver.mp4', self.mutex)
         self.thread_Driver.change_pixmap_signal.connect(self.update_driver_image)
         self.thread_Driver.start()
 
         # show Car video to main UI
-        #self.thread_Car = VideoThread('http://192.168.100.146:5000/video_feed', self.mutex)
+        #self.thread_Car = VideoThread('http://{Car_Path}/video_feed', self.mutex)
         self.Car_label.setStyleSheet("background : white;")
         self.thread_Car = VideoThread('./videos/Car.mp4', self.mutex)
         self.thread_Car.change_pixmap_signal.connect(self.update_car_image)
         self.thread_Car.start()
 
         # show Processing video to main UI
+        #self.thread_Processing = VideoThread('http://192.168.100.146:5000/video_feed', self.mutex)
         self.Processing_label.setStyleSheet("background : white;")
         self.thread_Processing = VideoThread('./videos/Server.mp4', self.mutex)
         self.thread_Processing.change_pixmap_signal.connect(self.update_processing_image)
         self.thread_Processing.start()
 
     def stop_threads(self):
+        url=f'http://54.175.8.12/db_set.php?car={0}'
+        response = requests.get(url)
+
         if hasattr(self, 'thread_Driver') and self.thread_Driver.isRunning():
             self.thread_Driver.stop()
         if hasattr(self, 'thread_Car') and self.thread_Car.isRunning():
@@ -245,10 +248,11 @@ class SecondWindow(QDialog):
         height, width, channel = rgb_image.shape
         bytes_per_line = channel * width
         convert_to_Qt_format = QImage(rgb_image.data, width, height, bytes_per_line, QImage.Format_RGB888)
-        resized_img = convert_to_Qt_format.scaled(300, 450)
+        resized_img = convert_to_Qt_format.scaled(550, 450)
 
         return QPixmap.fromImage(resized_img)
 
+    #set Server link
     def open_url(self):
            url = QUrl('http://54.175.8.12')
            QDesktopServices.openUrl(url)
