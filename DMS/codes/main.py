@@ -1,4 +1,4 @@
-from DMS import DMS
+from dms import DMS
 
 dms = DMS()
-dms.run()
+dms.run_dms()
