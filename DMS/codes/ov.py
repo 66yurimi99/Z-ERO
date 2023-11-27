@@ -6,8 +6,8 @@ class OpenVINO:
     def __init__(self):
         self.ie = IECore()
 
-        self.detect_net, self.input_layer_name_1 = self.load_model('../model/detect.xml', 'model/detect.bin', 'CPU')
-        self.classi_net, self.input_layer_name_2 = self.load_model('../model/classi.xml', 'model/classi.bin', 'GPU')
+        self.detect_net, self.input_layer_name_1 = self.load_model('../model/detect.xml', '../model/detect.bin', 'CPU')
+        self.classi_net, self.input_layer_name_2 = self.load_model('../model/classi.xml', '../model/classi.bin', 'GPU')
 
     def load_model(self, xml_path, bin_path, device):
         net = self.ie.read_network(model=xml_path, weights=bin_path)
