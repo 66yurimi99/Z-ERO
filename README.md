@@ -4,55 +4,27 @@
 
 ## High Level Design
 
-![./high_level_design.png](./high_level_design.png)
-
-## Clone code
-
-* (각 팀에서 프로젝트를 위해 생성한 repository에 대한 code clone 방법에 대해서 기술)
-
-```shell
-git clone https://github.com/66yurimi99/Z-ERO.git
-```
-
-## Prerequite
-
-* (프로잭트를 실행하기 위해 필요한 dependencies 및 configuration들이 있다면, 설치 및 설정 방법에 대해 기술)
-
-```shell
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-## Steps to build
-
-* (프로젝트를 실행을 위해 빌드 절차 기술)
-
-```shell
-cd ~/xxxx
-source .venv/bin/activate
-
-make
-make install
-```
-
-## Steps to run
-
-* (프로젝트 실행방법에 대해서 기술, 특별한 사용방법이 있다면 같이 기술)
-
-```shell
-cd ~/xxxx
-source .venv/bin/activate
-
-cd /path/to/repo/xxx/
-python demo.py -i xxx -m yyy -d zzz
-```
+* Software Defined Vehicle & Fleet Management
+![시스템 구성_DMS](https://github.com/66yurimi99/Z-ERO/assets/90135804/a6eaf4ef-aa50-4aa5-bf80-ceb11504a828)
 
 ## Output
 
-* (프로젝트 실행 화면 캡쳐)
+### DMS (운전자 모니터링 시스템, Driver Monitoring System)
+![image](https://github.com/66yurimi99/Z-ERO/assets/90135804/5a329e0b-2562-473f-bfba-288977862d06)
 
+### 자율 주행 시스템
+1. LCA (차선 유지 보조 시스템, Lane Centering Assist)
+  ![image](https://github.com/66yurimi99/Z-ERO/assets/90135804/85a49c26-c100-4a32-8e6c-a57a2cac5339)
 
-## Appendix
+3. FCA (충돌 방지 보조 시스템, Forward Collision-Avoidance Assist)
+  ![image](https://github.com/66yurimi99/Z-ERO/assets/90135804/bbb60fcf-59d9-4ece-bb30-c78d3c6b9807)
 
-* (참고 자료 및 알아두어야할 사항들 기술)
+### Event Logging
+1. Database (ERD)
+  ![ERD_흰색](https://github.com/66yurimi99/Z-ERO/assets/90135804/3ac76256-503a-41ac-a223-e304824075e6)
+
+2. Web Page
+  ![output_webpage](https://github.com/66yurimi99/Z-ERO/assets/90135804/6da7a0ee-d8f2-4cdf-8bbd-926cd9c4170b)
+
+### GUI Application (PyQt)
+![Screenshot from 2023-11-28 13-24-22](https://github.com/66yurimi99/Z-ERO/assets/90135804/aba19695-248d-4ea8-942a-28746bd91d88)
