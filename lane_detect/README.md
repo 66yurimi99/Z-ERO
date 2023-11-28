@@ -41,7 +41,7 @@ def cal_theta(dist1, dist2,dist3):
     theta = math.acos(cos_t)* (180/math.pi)
 ```
 
-### 4. 운전자 상태 정보 Web DB를 통한 통신
+### 4. 운전자 상태 정보와 RC카 제어를 위한 Web DB를 통한 통신
 
 ```python
 def thread_function_server():
