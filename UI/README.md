@@ -55,25 +55,22 @@
     ```
 - 각각의 Thread에서 정보를 읽어옵니다.
     ```python
-    # show Driver video to main UI
-    #self.thread_Driver = VideoThread('http://{Driver_Path}/video_feed', self.mutex)
-    self.thread_Driver = VideoThread('./videos/Driver.mp4', self.mutex)
+   # show Driver video to main UI
+    self.thread_Driver = VideoThread('./videos/DMS.webm', self.mutex)
     self.thread_Driver.change_pixmap_signal.connect(self.update_driver_image)
     self.thread_Driver.start()
 
     # show Car video to main UI
-    #self.thread_Car = VideoThread('http://{Car_Path}/video_feed', self.mutex)
     self.Car_label.setStyleSheet("background : white;")
-    self.thread_Car = VideoThread('./videos/Car.mp4', self.mutex)
+    self.thread_Car = VideoThread('./videos/Car.webm', self.mutex)
     self.thread_Car.change_pixmap_signal.connect(self.update_car_image)
     self.thread_Car.start()
 
     # show Processing video to main UI
-    #self.thread_Processing = VideoThread('http://192.168.100.146:5000/video_feed', self.mutex)
-    self.Processing_label.setStyleSheet("background : white;")
-    self.thread_Processing = VideoThread('./videos/Server.mp4', self.mutex)
-    self.thread_Processing.change_pixmap_signal.connect(self.update_processing_image)
-    self.thread_Processing.start()
+    self.Server_label.setStyleSheet("background : white;")
+    self.thread_Server = VideoThread('./videos/Server.webm', self.mutex)
+    self.thread_Server.change_pixmap_signal.connect(self.update_server_image)
+    self.thread_Server.start()
     ```
 
 ### 3. Stop 버튼 클릭 시 Thread 종료
