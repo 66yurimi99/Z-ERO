@@ -1,4 +1,4 @@
-# UI
+# GUI Application
 자동차 주행 환경에 대한 사용자 UI를 구축합니다.
 
 ## Settings
